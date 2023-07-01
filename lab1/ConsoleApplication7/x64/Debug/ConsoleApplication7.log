@@ -1,0 +1,8 @@
+﻿  Source.cpp
+C:\desktop\1\ConsoleApplication7\Source.cpp(3,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\desktop\1\ConsoleApplication7\Source.cpp(4,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\desktop\1\ConsoleApplication7\Header.h(4,9): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\desktop\1\ConsoleApplication7\Source.cpp(33,31): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\desktop\1\ConsoleApplication7\Source.cpp(51,47): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+C:\desktop\1\ConsoleApplication7\Source.cpp(107,28): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  ConsoleApplication7.vcxproj -> C:\Users\Alexandr\Desktop\lab1\x64\Debug\ConsoleApplication7.exe
