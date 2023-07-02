@@ -1,0 +1,87 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <list>
+
+using namespace std;
+
+class Graph
+{
+    size_t size;
+    vector<list<int>> l;
+public:
+    Graph(int size)
+    {
+        this->size = size;
+        l.resize(size);
+    }
+
+    int count()
+    {
+        int count = 0;
+        for (int i = 0; i < size; i++)
+        {
+            for (auto it : l[i])
+            {
+                if (it == i)
+                    count++;
+            }
+        }
+        return count;
+    }
+
+    void check()
+    {
+        int countOnes = count();
+        if (countOnes == size)
+        {
+            cout << "The graph is reflexive" << endl;
+            return;
+        }
+
+        if (countOnes == 0)
+        {
+            cout << "The graph is anti-reflexive" << endl;
+            return;
+        }
+
+        cout << "The graph is partially reflective" << endl;
+    }
+
+    void setMatrix(ifstream& in)
+    {
+        int connect;
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+            {
+                in >> connect;
+                if (connect)
+                    l[i].push_back(j);
+            }
+    }
+};
+
+void fileInput(const string& fileName)
+{
+    ifstream in;
+    in.open(fileName);
+    if (in.is_open())
+    {
+        int size;
+        in >> size;
+        Graph gr(size);
+        gr.setMatrix(in);
+        gr.check();
+    }
+    else
+        cout << "Error", exit(1);
+}
+
+int main()
+{
+    fileInput("test1.txt");
+    fileInput("test2.txt");
+    fileInput("test3.txt");
+    fileInput("test4.txt");
+    fileInput("test5.txt");
+}
