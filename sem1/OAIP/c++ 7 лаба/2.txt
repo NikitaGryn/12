@@ -1,0 +1,339 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include "stdio.h"
+#include "io.h"
+#include <sstream>
+#include <string>
+#include <regex>
+#include <cmath>
+using namespace std;
+void checkInput(int& a)
+{
+    string str, word;
+    int words = 0;
+    getline(cin, str);
+    istringstream is(str);
+    while (is >> word)
+    {
+        words++;
+    }
+    if (words > 1)
+    {
+        cout << "Too many inputs. Try again \n";
+        checkInput(a);
+        return;
+    }
+    if (word.size() > 8)
+    {
+        cout << "The number is too large for an integer. Try again \n";
+        checkInput(a);
+        return;
+    }
+    if (!((word[0] >= '0' && word[0] <= '9') || str[0] == '-'))
+    {
+        cout << "Incorrect input. Try again \n";
+        checkInput(a);
+        return;
+    }
+    for (int i = 1; i < word.size(); i++)
+    {
+        if (!((word[i] >= '0' && word[i] <= '9')))
+        {
+            cout << "Incorrect input. Try again \n";
+            checkInput(a);
+            return;
+        }
+    }
+    a = stoi(word);
+}
+struct Person
+{
+    char lastName[500];
+    int group;
+    int marks[3];
+};
+
+void Create()
+{
+    FILE* f = fopen("D:\\text.txt", "wb");
+    if (f == NULL)
+    {
+        cout << "Error in creating a file!" << endl;
+        exit(1);
+    }
+    fclose(f);
+}
+void View()
+{
+    FILE* f = fopen("D:\\text.txt", "rb");
+    int amt;
+    if (f == NULL)
+    {
+        cout << "Error in opening a file!" << endl;
+        exit(1);
+    }
+    amt = _filelength(_fileno(f)) / sizeof(struct Person);
+    Person* p = new Person[amt];
+    for (int i = 0; i < amt; i++)
+    {
+        fread(p + i, sizeof(struct Person), 1, f);
+    }
+    for (int i = 0; i < amt; i++)
+    {
+        cout << i + 1 << ")Last name: " << p[i].lastName << " group: " << p[i].group << "\nPhys Marks: " << p[i].marks[0] << "\nMath Marks: " << p[i].marks[1] << "\nInf Marks: " << p[i].marks[2] << endl;
+    }
+    fclose(f);
+}
+void Add()
+{
+    FILE* f = fopen("D:\\text.txt", "ab");
+    Person p;
+    int n, sum = 0;
+    if (f == NULL)
+    {
+        cout << "Error in creating a file!";
+        exit(1);
+    }
+    cout << "Last name: ";
+    cin >> p.lastName;
+    cin.ignore(100, '\n');
+    cout << "Group: ";
+    checkInput(p.group);
+    n = 3;
+    cout << "What is Phys mark?\n";
+    checkInput(p.marks[0]);
+    while (p.marks[0] < 0 || p.marks[0]>10) {
+        cout << "Marks can't be more then 10 or less then 0\n";
+        cout << "What is Phys mark?\n";
+        checkInput(p.marks[0]);
+    }
+    cout << "What is Math mark?\n";
+    checkInput(p.marks[1]);
+    while (p.marks[1] < 0 || p.marks[1]>10) {
+        cout << "Marks can't be more then 10 or less then 0\n";
+        cout << "What is Math mark?\n";
+        checkInput(p.marks[1]);
+    }
+    cout << "What is Inf mark?\n";
+    checkInput(p.marks[2]);
+    while (p.marks[2] < 0 || p.marks[2]>10) {
+        cout << "Marks can't be more then 10 or less then 0\n";
+        cout << "What is Inf mark?\n";
+        checkInput(p.marks[2]);
+    }
+    fwrite(&p, sizeof(struct Person), 1, f);
+    fclose(f);
+}
+void Solution()
+{
+    FILE* f = fopen("D:\\text.txt", "rb");
+    int amt;
+    if (f == NULL)
+    {
+        cout << "Error in opening a file!" << endl;
+        exit(1);
+    }
+    amt = _filelength(_fileno(f)) / sizeof(struct Person);
+    Person* p = new Person[amt];
+    for (int i = 0; i < amt; i++)
+    {
+        fread(p + i, sizeof(struct Person), 1, f);
+    }
+    int count = 0;
+    for (int i = 0; i < amt; i++)
+    {
+        if (min(min(p[i].marks[0], p[i].marks[1]), p[i].marks[2]) >= 4)
+        {
+            cout << i + 1 << ")Last name: " << p[i].lastName << " group: " << p[i].group << "\nPhys Marks: " << p[i].marks[0] << "\nMath Marks: " << p[i].marks[1] << "\nInf Marks: " << p[i].marks[2] << endl;
+        }
+    }
+    fclose(f);
+}
+void Sort()
+{
+    FILE* f = fopen("D:\\text.txt", "rb");
+    int amt, choice;
+    if (f == NULL)
+    {
+        cout << "Error in opening a file!" << endl;
+        exit(1);
+    }
+    amt = _filelength(_fileno(f)) / sizeof(struct Person);
+    Person* p = new Person[amt];
+    for (int i = 0; i < amt; i++)
+    {
+        fread(p + i, sizeof(struct Person), 1, f);
+    }
+    cout << "How do you want to sort the output? \n\
+             1. By group \n\
+             2. By string \n";
+    cin >> choice;
+    fclose(f);
+    f = fopen("D:\\text.txt", "wb");
+    Person temp;
+    switch (choice)
+    {
+    case 1:
+        for (int i = 0; i < amt - 1; i++)
+            for (int j = i + 1; j < amt; j++)
+                if (p[i].group > p[j].group)
+                {
+                    temp = p[i];
+                    p[i] = p[j];
+                    p[j] = temp;
+                }
+        fwrite(p, sizeof(struct Person), amt, f);
+        fclose(f);
+        break;
+    case 2:
+        for (int i = 0; i < amt - 1; i++)
+            for (int j = i + 1; j < amt; j++)
+                if (strcmp(p[i].lastName, p[j].lastName) > 0)
+                {
+                    temp = p[i];
+                    p[i] = p[j];
+                    p[j] = temp;
+                }
+        fwrite(p, sizeof(struct Person), amt, f);
+        fclose(f);
+        break;
+    default:
+        cout << "Incorrect value, exiting the program.";
+        exit(2);
+        break;
+    }
+}
+void Edit()
+{
+    FILE* f = fopen("D:\\text.txt", "rb");
+    int line, amt, n, sum = 0;
+    if (f == NULL)
+    {
+        cout << "Error in opening a file!" << endl;
+        exit(1);
+    }
+    amt = _filelength(_fileno(f)) / sizeof(struct Person);
+    Person* p = new Person[amt];
+    for (int i = 0; i < amt; i++)
+    {
+        fread(p + i, sizeof(struct Person), 1, f);
+    }
+    fclose(f);
+    cout << "Choose what student you want to edit: ";
+    checkInput(line);
+    line--;
+    if (line < 0 || line > amt)
+    {
+        cout << "The number is greater than number of data!";
+        exit(1);
+    }
+    cout << "Last name: ";
+    cin >> p[line].lastName;
+    cin.ignore(1000, '\n');
+    cout << "Group: ";
+    checkInput(p[line].group);
+    n = 3;
+    cout << "What is Phys mark?\n";
+    checkInput(p[line].marks[0]);
+    while (p[line].marks[0] < 0 || p[line].marks[0]>10) {
+        cout << "Marks can't be more then 10 or less then 0\n";
+        cout << "What is Phys mark?\n";
+        checkInput(p[line].marks[0]);
+    }
+    cout << "What is Math mark?\n";
+    checkInput(p[line].marks[1]);
+    while (p[line].marks[1] < 0 || p[line].marks[1]>10) {
+        cout << "Marks can't be more then 10 or less then 0\n";
+        cout << "What is Math mark?\n";
+        checkInput(p[line].marks[1]);
+    }
+    cout << "What is Inf mark?\n";
+    checkInput(p[line].marks[2]);
+    while (p[line].marks[2] < 0 || p[line].marks[2]>10) {
+        cout << "Marks can't be more then 10 or less then 0\n";
+        cout << "What is Inf mark?\n";
+        checkInput(p[line].marks[2]);
+    }
+    f = fopen("D:\\text.txt", "wb");
+    fwrite(p, sizeof(struct Person), amt, f);
+    fclose(f);
+}
+void Delete()
+{
+    FILE* f = fopen("D:\\text.txt", "rb");
+    int amt, line;
+    if (f == NULL)
+    {
+        cout << "Error in opening a file!" << endl;
+        exit(1);
+    }
+    amt = _filelength(_fileno(f)) / sizeof(struct Person);
+    Person* p = new Person[amt];
+    for (int i = 0; i < amt; i++)
+    {
+        fread(p + i, sizeof(struct Person), 1, f);
+    }
+    fclose(f);
+    cout << "Choose what student you want to delete: ";
+    checkInput(line);
+    line--;
+    if (line < 0 || line > amt)
+    {
+        cout << "The number is greater than number of data!";
+        exit(1);
+    }
+    for (int i = line; i < amt - 1; i++)
+    {
+        p[i] = p[i + 1];
+    }
+    amt--;
+    f = fopen("D:\\text.txt", "wb");
+    fwrite(p, sizeof(struct Person), amt, f);
+    fclose(f);
+}
+int main()
+{
+    int choice;
+    bool check = true;
+    do
+    {
+        cout << "Choose one of the options:\n\
+        1.Create \n\
+        2.View \n\
+        3.Add \n\
+        4.Solution \n\
+        5.Edit \n\
+        6.Delete \n\
+        7.Sort" << endl;
+        cin >> choice;
+        cin.ignore(1000, '\n');
+        switch (choice)
+        {
+        case 1:
+            Create();
+            break;
+        case 2:
+            View();
+            break;
+        case 3:
+            Add();
+            break;
+        case 4:
+            Solution();
+            break;
+        case 5:
+            Edit();
+            break;
+        case 6:
+            Delete();
+            break;
+        case 7:
+            Sort();
+            break;
+        default:
+            check = false;
+            cout << "Incorrect value. Exiting the program.";
+            break;
+        }
+    } while (check);
+}

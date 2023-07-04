@@ -1,0 +1,45 @@
+#include <iostream> 
+#include <math.h>
+using namespace std;
+
+
+int main()
+{
+	double a, b,c,d,e,f,g,h;
+	double z1, z2;
+	while (!(cin >> a))
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	while (!(cin >> b))
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	while (!(cin >> z1))
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	if ((abs(a - b) * z1 + pow(a, 2)) == 0)
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	if ((a) <= -1)
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	if ((a) >= 1)
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	c = 5 * atan(a);
+	d = (acos(a))*(a + (3 * (abs(a - b))) + pow(a, 2));
+	g = 4*((abs(a - b)) * z1 + pow(a, 2));
+	z2 = c - d/g;
+	cout << z2 << endl;
+}

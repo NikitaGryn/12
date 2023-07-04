@@ -1,0 +1,49 @@
+#include <iostream> 
+#include <math.h>
+using namespace std;
+
+
+int main()
+{
+	double a, b;
+	double z1, z2;
+	while (!(cin >> a))
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	while (!(cin >> b))
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	if ((sqrt(pow(a, 3) * b) + a * b + pow(a, 2) - a) == 0)
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	if ((a) == 0)
+		{
+			cout << "error" << endl;
+			return 0;
+	}
+	if ((a) < 0)
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	if ((b) < 0)
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	if (((pow(a, 3) * b)) < 0)
+	{
+		cout << "error" << endl;
+		return 0;
+	}
+	z1 = ((a-1)*sqrt(a)-(b-1)*sqrt(b))/(sqrt(pow(a,3)*b)+a*b+pow(a,2)-a);
+	z2 = (sqrt(a)-sqrt(b))/a;
+	cout << z1 << endl;
+	cout << z2;
+}

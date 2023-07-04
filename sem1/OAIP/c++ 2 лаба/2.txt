@@ -1,0 +1,62 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+double input()
+{
+    int n;
+    do {
+        cin >> n;
+        if (!cin || cin.get() != '\n') {
+            cin.clear();
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n');
+            cout << "Повторите попытку: ";
+        }
+        else {
+            return n;
+        }
+    } while (true);
+}
+
+int main()
+{
+    setlocale(LC_ALL, "ru");
+    float x, y, z, d, c, f;   int n;
+    cout << "Введите z: ";
+    z = input();
+    if (z < 0) {
+        x = (z * z - z);
+        cout << "По 1 ветке" << endl;
+    }
+    if (z >= 0) {
+        x = (z * z * z);
+        cout << "По 2 ветке" << endl;
+    }
+    cout << "Введите d: ";
+    d = input();
+    cout << "Введите c: ";
+    c = input();
+    cout << "Выберите функцию:" << endl<< "1) 2 * x" << endl<< "2) x ^ 2 ";
+    n = input();
+    switch (n) {
+    case 1:
+        f = (2 * x);
+        cout << "Выбрана первая функция" << endl;
+        y = pow(sin(c * f + d * d + x * x), 3);
+        cout << y << endl;
+        break;
+    case 2:
+        f = (pow(x, 2));
+        cout << "Выбрана вторая функция " << endl;
+        y = pow(sin(c * f + d * d + x * x), 3);
+        cout << y << endl;
+        break;
+    case 3:
+        f = (x / 3);
+        cout << "Выбрана третья функция" << endl;
+        y = pow(sin(c * f + d * d + x * x), 3);
+        cout << y << endl;
+        break;
+    default:
+        cout << "Ошибка" << endl;
+    }
+}

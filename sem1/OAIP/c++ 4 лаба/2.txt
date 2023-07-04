@@ -1,0 +1,129 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    double x;
+    int j, v, f;
+
+
+    const int length = 20;
+    double arr[length]{ 0 };
+    srand(time(NULL));
+
+    cout << "Сколько элементов должно быть в массиве?\n";
+
+    while (!(cin >> v) || cin.get() != '\n') {
+        cout << "Ошибка!\nВведите целое число\n";
+        cin.clear();
+        cin.ignore(9999, '\n');
+        cin.sync();
+    }
+
+    if (v > 20 || v<1) {
+        cout << "error" << endl;
+        return 0;
+    }
+
+    cout << "1:Заполнение массива самостоятельно\n2:Заполнение массива случайными числами\n";
+
+    while (!(cin >> j) || cin.get() != '\n') {
+        cout << "Ошибка!\nВведите целое число\n";
+        cin.clear();
+        cin.ignore(9999, '\n');
+        cin.sync();
+    }
+
+
+    switch (j)
+    {
+    case 1: {
+        for (int i = 0; i < v; i++) {
+
+            while (!(cin >> x) || cin.get() != '\n') {
+                cout << "Ошибка!\nВведите целое число\n";
+                cin.clear();
+                cin.ignore(9999, '\n');
+                cin.sync();
+            }
+            arr[i] = x;
+
+        }
+        break;
+    }
+    case 2: {
+
+        for (int i = 0; i < v; i++) {
+            arr[i] = rand() - 15000;
+        }
+        break;
+
+    }
+    default:
+        cout << "error" << endl;
+        return 0;
+    }
+
+    cout << "Элементы массива:";
+
+    for (int i = 0; i < v; i++) {
+        cout << "\n" << arr[i];
+    }
+    int sum = 0;
+    double first0, last0;
+    int index = 0;
+    for (size_t i = 0; i < v; i++)
+    {
+        if (arr[i] == 0) {
+            index++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    if (arr[0] > 0) {
+
+        for (int i = index; i < v; i++)
+            if (arr[i] > 0)
+            {
+                first0 = i;
+                break;
+            }
+        for (int i = index; i < v; i++)
+            if (arr[i] < 0)
+            {
+                last0 = i;
+                break;
+            }
+        for (int i = first0 + 1; i < last0; i++)
+        {
+            sum += arr[i];
+        }
+    }
+    else
+    {
+        for (int i = index; i < v; i++)
+            if (arr[i] < 0)
+            {
+                first0 = i;
+
+                break;
+            }
+        for (int i = index; i < v; i++)
+            if (arr[i] > 0)
+            {
+                last0 = i;
+                break;
+            }
+        for (int i = first0 + 1; i < last0; i++)
+        {
+            sum += arr[i];
+        }
+
+    }
+    cout << endl << "Сумма равна=" << sum;
+    return 69420;
+}

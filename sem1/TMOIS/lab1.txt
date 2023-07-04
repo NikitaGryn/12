@@ -1,0 +1,103 @@
+#include<iostream>
+#include<vector>
+#include<conio.h>
+
+using namespace std;
+
+void Show(string operation, vector<int>& result, int n)		
+{
+	cout << "\nРезультат " << operation << " множеств А и В = ( ";
+	for (int i = 0; i < n; i++)	 
+	{
+		cout << result[i] << " ";	
+	}
+	cout << ")\n";
+}
+
+void make_MN(int n, vector<int>& vec, char x)	
+{
+	cout << "Введите каждый элемент множества " << x << " ( " << n << " элементов )\n";
+	for (int i = 0; i < n; i++)
+	{
+		cin >> vec[i];		   
+	}
+}
+
+int Foo1(vector<int>& A, vector<int>& B, int n1, int n2)	// реализация операции обЪединения
+{
+	int plus = 0; //создание пустого множества
+	int ignor;//заносим элементы множества А в С
+	for (int i = 0; i < n1; i++)   			
+	{
+		ignor = 0;//сравнение элементов
+		for (int k = 0; k < n2; k++)
+		{
+			if (A[i] == B[k])	//Проверка на последний ли элемент из А
+			{
+				ignor++;
+			}
+		}
+		if (ignor == 0)	//Проверка на последний ли элемент из В
+		{
+			plus++;	//заносим элемент во множество С
+			B.push_back(A[i]);	//Вывод результата операции
+		}
+	}
+	return plus;
+}
+
+int Foo2(vector<int>& A, vector<int>& B, vector<int>& D, int n1, int n2)	//реализация операции пересечения
+{
+	int plus = 0;//создание пустого множества
+	for (int i = 0; i < n1; i++)//сравнение элементов
+	{
+		for (int k = 0; k < n2; k++)
+		{
+			if (A[i] == B[k])//Проверка на последний ли В
+			{
+				plus++;//добавление элемента
+				D.push_back(A[i]);	  //Вывод результата операции персечения
+			}
+		}
+	}
+	return plus;
+}
+void main()
+{
+	int n1, n2, number;				  //Начало алгоритма
+	setlocale(LC_ALL, "Rus");
+	cout << "\nВведите мощность множества А : ";//Ввод мощности первого множества
+	cin >> n1;
+	if (n1 > 500)  //проверка на превышение лимита мощности первого множества
+		{
+			cout << "Введен размер, превышающий лимит " << endl;
+			return;
+		}
+	vector<int> A(n1);			 //Ввод элементов первого множества
+	make_MN(n1, A, 'A');
+	cout << "\nВведите мощность множества B : ";//Ввод мощности второго множества
+	cin >> n2;	\
+	if (n2 > 500) //проверка на превышение лимита мощности второго множества
+		{
+			cout << "Введен размер, превышающий лимит " << endl;
+			return;
+		}
+	vector<int> B(n2); //Ввод элементов второго множества
+	vector<int> D;
+	make_MN(n2, B, 'B');
+
+	cout << "\nВыберите операцию над множествами ( укажите число ) : \n1 - пересечение\n2 - обЪединение\nВведите число : ";//выбор пользователем операции
+	cin >> number;
+	while (number != 1 && number != 2) {
+		cout << "\nВы ввели неверное число\n";
+		cin >> number;
+	}
+	if (number == 2) {
+		number = Foo1(A, B, n1, n2);
+		Show("объединения", B, n2 + number);
+	}				//если выбрана первая операция 
+	else if (number == 1) {
+		number = Foo2(A, B, D, n1, n2);
+		Show("пересечения", D, number);
+	}	 //если выбрана вторая операция
+}

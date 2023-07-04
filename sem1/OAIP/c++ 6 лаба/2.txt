@@ -1,0 +1,39 @@
+#include <iostream>;
+#include <cstring>
+#include <regex>
+#include <cmath>
+#include <stdio.h>
+
+using namespace std;
+
+int main()
+{
+	bool finded = false;
+	string string = "", TempString = "", RightSubstring = "";
+	cout << "Please, type a string\n";
+	getline(cin, string);
+	while (string == "") {
+		cout << "String must be not null\n";
+		cout << "Please, type a string\n";
+		getline(cin, string);
+	}
+	while (string != "" && !finded) {
+		for (int i = 0; i < string.length(); i++) {
+			TempString = string.substr(i, string.length() - i);
+			cout << TempString << endl;
+			if (regex_match(TempString, regex("[+-]?([0-9]*[.])?[0-9]+"))) {
+				RightSubstring = TempString;
+				finded = true;
+				break;
+			}
+		}
+		string = string.substr(0, string.length() - 1);
+	}
+	if (RightSubstring == "") {
+		cout << "There is no any number in string";
+	}
+	else {
+		cout << "Number:" << RightSubstring;
+	}
+}
+

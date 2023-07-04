@@ -1,0 +1,43 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+double input()
+{
+    int n;
+    do {
+        cin >> n;
+        if (!cin || cin.get() != '\n') {
+            cin.clear();
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n');
+            cout << "Повторите попытку: ";
+        }
+        else {
+            return n;
+        }
+    } while (true);
+}
+
+int main()
+{
+    setlocale(LC_ALL, "ru");
+    float x, y, z,d,k,c;
+    cout << "Введите значение z: " << endl;
+    z = input();
+    cout << "Введите значение c: " << endl;
+    c = input();
+    cout << "Введите значение d: " << endl;
+    d = input();
+    cout << "Введите значение k: " << endl;
+    k = input();
+    if (z < 0) {
+        x = z*z-z;
+        cout << "По первой ветке " << endl;
+    }
+    if (z >= 0) {
+        x = z*z*z;
+        cout << "По второй ветке " << endl;
+    }
+    y = pow(sin(c * x + pow(d, 2) + k * pow(x, 2)), 3);
+    cout << y << endl;
+
+}

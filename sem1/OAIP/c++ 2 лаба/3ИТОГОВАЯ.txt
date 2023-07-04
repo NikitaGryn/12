@@ -1,0 +1,60 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+double input()
+{
+    int n;
+    do {
+        cin >> n;
+        if (!cin || cin.get() != '\n') {
+            cin.clear();
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n');
+            cout << "Повторите попытку: ";
+        }
+        else {
+            return n;
+        }
+    } while (true);
+}
+int min(float x, float y, float z, float sum, float ymn, float minimal)
+{
+    double min;
+    if (sum >= ymn)
+    {
+        min = ymn;
+    }
+    else
+    {
+        min = sum;
+    }
+    return minimal;
+}
+
+int main()
+{
+    setlocale(LC_ALL, "ru");
+    double x, y, z, a, b, m, sum, ymn, sum2, ymn2;
+    cout << "Введите значение x: " << endl;
+    x = input();
+    cout << "Введите значение y: " << endl;
+    y = input();
+    cout << "Введите значение z: " << endl;
+    z = input();
+    sum = x + y + z;
+    ymn = x * y * z;
+    sum2 = x - y + z;
+    ymn2 = x * y / z;
+    a = min(sum, ymn);
+    b = min(sum2, ymn2);
+    if (b == 0) {
+        cout << "Ошибка, деление на 0";
+        return 0;
+    }
+    if (z == 0) {
+        cout << "Ошибка, деление на 0";
+        return 0;
+    }
+    m = a / b;
+    cout << "m=" << m << endl;
+    return 0;
+}

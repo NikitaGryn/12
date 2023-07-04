@@ -1,0 +1,69 @@
+#include "iostream"
+#include "iomanip"
+#include "math.h"
+using namespace std;
+
+double input()
+{
+    int n;
+    do {
+        cin >> n;
+        if (!cin || cin.get() != '\n') {
+            cin.clear();
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n');
+            cout << "Повторите попытку: ";
+        }
+        else {
+            return n;
+        }
+    } while (true);
+}
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    double** a, b;
+    int i, j, n, m, k;
+    cout << "Введите размер: n,m" << endl;
+    n = input();
+    m = input();
+    a = new double* [n];
+    for (i = 0; i < n; i++)
+        a[i] = new double[m];
+    for (i = 0; i < n; i++)
+        for (j = 0; j < m; j++)
+        {
+            cout << "введите a[" << i << "][" << j << "]:";
+            a[i][j] = input();
+        }
+    cout << "Массив:" << endl;
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < m; j++)
+            cout << setw(10) << a[i][j] << " ";
+        cout << endl;
+    }
+    for (i = 0; i < n - 1; i++) {
+        for (k = 0; k < n - 1; k++) {
+            if (a[k][0] > a[k + 1][0]) {
+                for (j = 0; j < m; j++) {
+                    b = a[k][j];
+                    a[k][j] = a[k + 1][j];
+                    a[k + 1][j] = b;
+                }
+            }
+        }
+    }
+    cout << "Результат:" << endl;
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < m; j++)
+            cout << setw(10) << a[i][j] << " ";
+        cout << endl;
+    }
+    for (i = 0; i < n; i++)
+        delete[] a[i];
+    delete[]a;
+    a = NULL;
+    return 0;
+}

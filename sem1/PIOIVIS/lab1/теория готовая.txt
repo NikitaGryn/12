@@ -1,0 +1,26 @@
+CMD
+Копировать файл - COPY A:*.txt "C:\Мои документы"
+Копировать папку XCOPY "C:\Мои документ\*.*" "D:\BACKUP\Мои документы"
+Вывод каталога dir
+создание файла echo This is sample text > MyFile.txt
+fsutil file createnew "file.txt" 0 -- создание пустого текст файла
+copy con filename_with_extension
+создать папку mkdir "C:/%%i"
+переименовать папку файл REN [диск:][путь]имя_файла1 имя_файла2
+перемещение папки файла move E:\test\folder1 E:\test\folder2
+удаление файла del c:\test
+удаление папки rmdir test
+вывод содержимого файла type
+
+Linux
+
+///создание файла nano файл.txt или echo "Это строка" > файл.txt
+создание папки mkdir Загрузки/папка
+переименование файла папки mv /home/sergiy/test/newfile /home/sergiy/test/file1
+///rename опции старое_имя новое_имя файлы
+удалить файл rm /usr/share/file
+удалить папку rm -r /home/user/photo/
+перемещение папки файла mv file /home/user/tmp/
+копирование файла cp file newfile
+копирование папки cp -r /etc /etc_back
+вывод содержимого файла cat

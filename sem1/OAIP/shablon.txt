@@ -1,0 +1,14 @@
+#include <iostream> 
+#include <math.h>
+using namespace std;
+
+
+int main()
+{
+ double a,b;
+ double z1,z2;
+ cin>>a;
+ cin >>b;
+ z1= a+b;
+ cout<< z1;
+}

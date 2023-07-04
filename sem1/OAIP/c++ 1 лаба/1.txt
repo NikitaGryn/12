@@ -1,0 +1,17 @@
+#include <iostream> 
+#include <math.h>
+using namespace std;
+
+
+int main()
+{
+	double a, b;
+	double z1, z2;
+	cin >> a;
+	cin >> b;
+
+	z1 = pow(cos(a), 4) + pow(sin(b), 2) + (pow(sin(2 * a), 2)) / 4 - 1;
+	z2 = sin(b + a) * sin(b - a);
+	cout << z1 << endl;
+	cout << z2;
+}

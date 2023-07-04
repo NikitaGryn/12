@@ -1,0 +1,90 @@
+#include <iostream>;
+#include <string>
+#include <regex>
+#include <cmath>
+#include <math.h>
+#include <stdio.h>
+# define pi 3.14159265358979323846
+
+using namespace std;
+
+string inputA(string input) {
+	cout << "What is a?\n";
+	cin >> input;
+	while (!regex_match(input, regex("[+-]?([0-9]*[.])?[0-9]+"))) {
+		cout << "a must be number, try again\n";
+		cout << "What is a?\n";
+		cin >> input;
+	};
+	return input;
+}
+string inputB(string input) {
+	cout << "What is b?\n";
+	cin >> input;
+	while (!regex_match(input, regex("[+-]?([0-9]*[.])?[0-9]+"))) {
+		cout << "b must be number, try again\n";
+		cout << "What is b?\n";
+		cin >> input;
+	};
+	return input;
+}
+string inputH(string input) {
+	cout << "What is h?\n";
+	cin >> input;
+	while (!regex_match(input, regex("[+]?([0-9]*[.])?[0-9]+")) || stod(input) == 0) {
+		cout << "h must be number and more then 0, try again\n";
+		cout << "What is h?\n";
+		cin >> input;
+	};
+	return input;
+}
+string inputN(string input) {
+	cout << "What is n?\n";
+	cin >> input;
+	while (!regex_match(input, regex("[0-9]*"))) {
+		cout << "n must be integer and more then 0\n";
+		cout << "What is n?\n";
+		cin >> input;
+	};
+	return input;
+}
+double solveS(int N, double x) {
+	int k = 0, i;
+	double s = 0, XK;
+	for (k = 1; k <= N; k++) {
+		XK = 1;
+		for (i = 1; i <= k; i++) {
+			XK *= x;
+		}
+		s += (XK * cos((pi * k) / 3)) / k;
+	}
+	return s;
+}
+
+double solveY(double x) {
+	return -(1. / 2) * log(1 - 2 * x * cos(pi / 3) + x * x);
+}
+
+void Out_Rez(double S, double Y) {
+	cout << "|Y(x) = " << Y << "  |  S(x) = " << S << "  |  |Y(x) - S(x)| = " << abs(Y - S) << "|\n";
+}
+
+int main() {
+	string a, b, h, n;
+	double Y, S = 0, x;
+	a = inputA(a);
+	b = inputB(b);
+	while (stod(a) == stod(b)) {
+		cout << "a connot equal b\n";
+		b = inputB(b);
+	}
+	h = inputH(h);
+	if (stod(a) > stod(b)) h = to_string(-stod(h));
+	n = inputN(n);
+	for (x = stod(a); x <= stod(b); x += stod(h)) {
+		S = solveS(stod(n), x);
+		Y = solveY(x);
+		Out_Rez(S, Y);
+	}
+
+}

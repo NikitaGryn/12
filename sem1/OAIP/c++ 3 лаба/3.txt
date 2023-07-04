@@ -1,0 +1,45 @@
+#define _USE_MATH_DEFINES
+#include <iostream> 
+#include <math.h> 
+using namespace std;
+double input()
+{
+    double n;
+    do {
+        cin >> n;
+        if (!cin || cin.get() != '\n') {
+            cin.clear();
+            cin.ignore((numeric_limits<streamsize>::max)(), '\n');
+            cout << "Повторите попытку: ";
+        }
+        else {
+            return n;
+        }
+    } while (true);
+}
+int main()
+{
+    setlocale(LC_ALL, "ru");
+    int n;
+    double a, b, h, y, s = 0, N;
+    cout << "Введите а:\n";
+    a = input();
+
+    cout << "Введите b\n";
+    b = input();
+    cout << "Введите h\n";
+
+    h = input();
+    cout << "Введите n\n";
+
+    n = input();
+    cout << "x Y(x)\t S(x)\t |Y(x)-S(x)|\n";
+    for (double x = a; x <= b; x = x + h) {
+        y = -1 / 2 * log(1 - 2 * x * cos(M_PI / 3) + x * x);
+        for (int k = 1; k <= n; k++) {
+
+            s += (pow(x, k) * cos(M_PI * k / 3) / k);
+        }
+        cout << x << " " << y << "\t " << s << "\t " << fabs(y - s) << "\n";
+    }
+}
